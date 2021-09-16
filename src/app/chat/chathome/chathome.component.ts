@@ -14,7 +14,7 @@ export class ChathomeComponent implements OnInit {
   private _hubConnection: HubConnection | undefined;
   public async: any;
   content = '';
-  messages: string[] = [];
+  messages: userMessage[] = [];
 
   constructor(fb: FormBuilder) {
     this.chatForm = fb.group({
@@ -26,9 +26,9 @@ export class ChathomeComponent implements OnInit {
   public sendMessage(): void {
 
     if (this._hubConnection) {
-        this._hubConnection.invoke('SendMessage', this.f.name.value,this.f.message.value);
+      this._hubConnection.invoke('SendMessage', this.f.name.value, this.f.message.value);
     }
-    // this.messages.push(`${this.f.name.value}: ${this.f.message.value}`);
+    this.messages.push(new userMessage('me', this.f.message.value));
     console.log(JSON.stringify(this.chatForm.value, null, 2));
     this.f.message.patchValue('');
   }
@@ -41,12 +41,16 @@ export class ChathomeComponent implements OnInit {
 
     this._hubConnection.start().catch(err => console.error(err.toString()));
 
-    this._hubConnection.on('ReceiveMessage', (user: string, message:string) => {
-      this.messages.push(`${user}: ${message}`);
+    this._hubConnection.on('ReceiveMessage', (user: string, message: string) => {
+      this.messages.push(new userMessage(user, message));
     });
   }
 
   get f(): { [key: string]: AbstractControl } {
     return this.chatForm.controls;
   }
+}
+
+class userMessage{
+  constructor(public user:string, public message:string){}
 }
