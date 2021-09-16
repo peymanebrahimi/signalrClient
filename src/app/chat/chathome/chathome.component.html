@@ -12,7 +12,7 @@
         <mat-form-field class="col-4">
             <mat-label>Message</mat-label>
             <input matInput formControlName="message" />
-            <!-- <mat-error *ngIf="f.message.invalid">required</mat-error> -->
+            <mat-error *ngIf="f.message.invalid">required</mat-error>
         </mat-form-field>
         <div class="col-2">
             <button mat-button color="primary" type="submit" [disabled]="chatForm.invalid">
@@ -30,8 +30,9 @@
 
 
 <div class="row">
-   <mat-divider></mat-divider>
+  
 </div>
+<mat-divider></mat-divider>
 
 <div class="row" *ngIf="messages.length > 0">
     <div class="table-responsive">
