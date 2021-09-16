@@ -1,0 +1,40 @@
+<mat-nav-list>
+
+  <mat-list-item [routerLink]="['/chat']">
+    <mat-icon matListIcon>info</mat-icon>
+    <a matLine>Chat</a>
+  </mat-list-item>
+
+  <ng-container *ngIf="!(isAuthenticated | async)">
+    <mat-list-item [routerLink]="['/authentication/login']">
+      <mat-icon matListIcon>fingerprint</mat-icon>
+      <a matLine>Login</a>
+    </mat-list-item>
+  </ng-container>
+
+  <ng-container *ngIf="isAuthenticated | async">
+
+    <a mat-list-item [matMenuTriggerFor]="menuTesting">
+      <mat-icon matListIcon>pending_actions</mat-icon>
+      <span>Testing</span>
+    </a>
+
+    <mat-menu #menuTesting="matMenu">
+      <button mat-menu-item routerLink="/testing/user1" routerLinkActive="active">
+        <mat-icon matListIcon>perm_identity</mat-icon>
+        <span>User1</span>
+      </button>
+      <button mat-menu-item routerLink="/testing/authModel" routerLinkActive="active">
+        <mat-icon matListIcon>supervisor_account</mat-icon>
+        <span> Auth Model</span>
+      </button>
+    </mat-menu>
+
+    <a mat-list-item [routerLink]='["/authentication/logout"]' [state]='{ local: true }'>
+      <mat-icon matListIcon>power_settings_new </mat-icon>
+      <span>Logout</span>
+    </a>
+
+  </ng-container>
+
+</mat-nav-list>

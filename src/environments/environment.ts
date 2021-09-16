@@ -4,9 +4,13 @@
 
 export const environment = {
   production: false,
-  chatHub:"http://185.7.212.235:83/chathub"
+  chatHub: "http://185.7.212.235:83/chathub",
+  // idsrvUrl: 'https://localhost:5001',
+  serverUrl: 'http://localhost:5000',
+  appUrl: window.location.origin,
+  loginUrl: window.location.origin + "/"
 };
- 
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

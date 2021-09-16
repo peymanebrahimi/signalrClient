@@ -7,22 +7,35 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialcoreModule } from './materialcore/materialcore.module';
-import { SidenavComponent } from './sidenav/sidenav.component';
-import { ToolbarComponent } from './toolbar/toolbar.component';
+import { ApiAuthorizationModule } from './authorization/api-authorization.module';
+import { NavbarComponent } from './navbar/navbar.component';
+import { NavsideComponent } from './navside/navside.component';
+import { GreetingComponent } from './greeting/greeting.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
     AppComponent, 
-    SidenavComponent, 
-    ToolbarComponent
+
+    NavbarComponent,
+    NavsideComponent,
+    GreetingComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ApiAuthorizationModule,
     MaterialcoreModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

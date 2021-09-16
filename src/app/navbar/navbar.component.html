@@ -1,0 +1,35 @@
+<mat-toolbar color="primary">
+    <div>
+
+        <button mat-icon-button (click)="onToggleSidenav()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span style="cursor: pointer" [routerLink]="['/']"> SignalR Client
+            <!-- <a mat-button disableRipple routerLink="/">Angular Deep Dive</a> -->
+        </span>
+    </div>
+
+    <span class="example-spacer"></span>
+
+    
+    <app-greeting [isSmallDevice]="isSmallDevice"></app-greeting>
+
+    
+    <button mat-icon-button [matMenuTriggerFor]="authMenu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #authMenu="matMenu">
+        <button mat-menu-item *ngIf="!(isAuthenticated | async)" [routerLink]='["/authentication/login"]'>
+            <mat-icon>fingerprint</mat-icon>
+            <span >Login</span>
+        </button>
+        
+        <button mat-menu-item *ngIf="isAuthenticated | async" [routerLink]='["/authentication/logout"]'
+            [state]='{ local: true }'>
+            <mat-icon>power_settings_new </mat-icon>
+            <span >Logout</span>
+        </button>
+        
+        <app-greeting [isSmallDevice]="isSmallDevice" [isMenu]="true"></app-greeting>
+    </mat-menu>
+</mat-toolbar>

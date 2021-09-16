@@ -1,3 +1,22 @@
-<app-sidenav></app-sidenav>
-
-<router-outlet></router-outlet>
+<div dir="ltr">
+    <app-navbar [isSmallDevice]="isSmallDevice" (sidenavToggle)="sidenav.toggle()"></app-navbar>
+  
+    <mat-sidenav-container class="example-container">
+  
+      <mat-sidenav #sidenav [mode]="isSmallDevice ? 'over' : 'side'" [opened]="!(isSmallDevice)">
+        <app-navside (sidenavClose)="sidenav.close()"></app-navside>
+      </mat-sidenav>
+  
+      <mat-sidenav-content>
+  
+        <!-- <app-spinner name="major"></app-spinner>  -->
+  
+        <div class="container mt-2">
+          <router-outlet></router-outlet>
+        </div>
+  
+      </mat-sidenav-content>
+  
+    </mat-sidenav-container>
+  
+  </div>

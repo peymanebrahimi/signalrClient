@@ -1,0 +1,20 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+img {
+  max-height  : 50px;
+  border      : 2px solid white;
+  display     : inline;
+  margin-right: 5px;
+
+}
+
+.fixed-header {
+  position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index : 2;
+  top     : 0;
+  left    : 0;
+  right   : 0;
+}

@@ -1,0 +1,11 @@
+<ng-container *ngIf="isMenu; else toolbarBlock">
+    <button mat-menu-item *ngIf="isAuthenticated$ | async" [routerLink]='["/authentication/profile"]'>
+        <span >Hello</span> {{ userName$ | async }}
+    </button>
+</ng-container>
+
+<ng-template #toolbarBlock>
+    <div *ngIf="!isSmallDevice && (isAuthenticated$ | async)">
+        <span >Hello</span> {{ userName$ | async }}
+    </div>
+</ng-template>
