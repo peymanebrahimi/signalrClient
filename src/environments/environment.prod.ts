@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  chatHub:"http://185.7.212.235:83/chathub"
 };
