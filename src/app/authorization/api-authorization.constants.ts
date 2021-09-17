@@ -1,3 +1,5 @@
+import { environment } from "src/environments/environment";
+
 export const ApplicationName = 'ChatApp';
 
 export const ReturnUrlType = 'returnUrl';
@@ -20,9 +22,9 @@ export const LoginActions = {
   Profile: 'profile',
   Register: 'register'
 };
-
+ 
 let applicationPaths: ApplicationPathsType = {
-  DefaultLoginRedirectPath: '/',
+  DefaultLoginRedirectPath: environment.serverUrl,//'/',
   ApiAuthorizationClientConfigurationUrl: `/_configuration/${ApplicationName}`,
   Login: `authentication/${LoginActions.Login}`,
   LoginFailed: `authentication/${LoginActions.LoginFailed}`,

@@ -5,8 +5,8 @@ import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationErr
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { PromptUpdateService } from './_services/prompt-update.service';
-
+// import { PromptUpdateService } from './_services/prompt-update.service';
+ 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -23,7 +23,8 @@ export class AppComponent {
 
   private _onDestroy = new Subject<void>();
 
-  constructor(private promptUpdateService: PromptUpdateService,
+  constructor(
+    // private promptUpdateService: PromptUpdateService,
     // private authService: AuthService,
     private router: Router,
 
@@ -40,8 +41,6 @@ export class AppComponent {
         }
       });
 
-    // environment.loginUrl = window.location.href;
-    console.log("environment.loginUrl: ", environment.loginUrl);
   }
 
   ngOnInit() {

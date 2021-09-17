@@ -19,9 +19,9 @@ export class GreetingComponent implements OnInit {
   isAuthenticated$: Observable<boolean>;
   userName$: Observable<string>;
 
-  constructor(public auth: AuthorizeService) {
-    this.isAuthenticated$ = this.auth.isAuthenticated();
-    this.userName$ = this.auth.getUser().pipe(map((u:any) => u && u.name));
+  constructor(public authService: AuthorizeService) {
+    this.isAuthenticated$ = this.authService.isAuthenticated();
+    this.userName$ = this.authService.getUser().pipe(map((u:any) => u && u.name));
    }
 
   ngOnInit(): void {

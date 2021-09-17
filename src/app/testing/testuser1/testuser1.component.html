@@ -1,0 +1,21 @@
+<!-- <div *ngIf="isAuthenticated | async as authed; else noAuth"> -->
+   
+    <button (click)="callApi()">Get User from Api</button>
+    <hr />
+
+    <br />
+
+    <!-- Is Authenticated: {{ authed }} -->
+
+    <br />
+    userData
+    <pre>{{ authService.getUser() | json }}</pre>
+
+    <br />
+<!-- </div>  -->
+
+<ng-template #noAuth>
+
+    You are NOT authenticated
+</ng-template>
+

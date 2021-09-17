@@ -179,7 +179,8 @@ export class AuthorizeService {
       return;
     }
 
-    const response = await fetch(ApplicationPaths.ApiAuthorizationClientConfigurationUrl);
+    // const response = await fetch(ApplicationPaths.ApiAuthorizationClientConfigurationUrl);
+    const response = await fetch(`${environment.serverUrl}/_configuration/ChatApp`);
     if (!response.ok) {
       throw new Error(`Could not load settings for '${ApplicationName}'`);
     }

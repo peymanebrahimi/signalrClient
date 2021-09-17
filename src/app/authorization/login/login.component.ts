@@ -3,6 +3,7 @@ import { AuthorizeService, AuthenticationResultStatus } from '../authorize.servi
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { LoginActions, QueryParameterNames, ApplicationPaths, ReturnUrlType } from '../api-authorization.constants';
+import { environment } from 'src/environments/environment';
 
 // The main responsibility of this component is to handle the user's login process.
 // This is the starting point for the login process. Any component that needs to authenticate
@@ -109,9 +110,12 @@ export class LoginComponent implements OnInit {
       // This is an extra check to prevent open redirects.
       throw new Error('Invalid return url. The return url needs to have the same origin as the current page.');
     }
-    return (state && state.returnUrl) ||
+    let result = (state && state.returnUrl) ||
       fromQuery ||
-      ApplicationPaths.DefaultLoginRedirectPath;
+      environment.loginUrl
+      // ApplicationPaths.DefaultLoginRedirectPath
+      ;
+    return result;
   }
 
   private redirectToApiAuthorizationPath(apiAuthorizationPath: string) {
