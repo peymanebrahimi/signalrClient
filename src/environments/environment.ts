@@ -6,9 +6,7 @@ export const environment = {
   production: false,
   // chatHub: "http://185.7.212.235:83/chathub",
   chatHub: "http://localhost:5000/chathub",
-  // idsrvUrl: 'https://localhost:5001',
   serverUrl: 'http://localhost:5000',
-  appUrl: window.location.origin,
   loginUrl: window.location.origin + "/"
 };
 
