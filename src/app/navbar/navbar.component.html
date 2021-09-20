@@ -24,6 +24,11 @@
             <span >Login</span>
         </button>
         
+        <!-- <button mat-menu-item *ngIf="!(isAuthenticated | async)" [routerLink]='["/authentication/register"]'>
+            <mat-icon>how_to_reg</mat-icon>
+            <span >Register</span>
+        </button> -->
+
         <button mat-menu-item *ngIf="isAuthenticated | async" [routerLink]='["/authentication/logout"]'
             [state]='{ local: true }'>
             <mat-icon>power_settings_new </mat-icon>
