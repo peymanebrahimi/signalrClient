@@ -1,18 +1,25 @@
 <mat-nav-list>
 
   <mat-list-item [routerLink]="['/chat']">
-    <mat-icon matListIcon>info</mat-icon>
-    <a matLine>Chat</a>
+    <mat-icon matListIcon>phone_in_talk</mat-icon>
+    <a matLine>چت</a>
   </mat-list-item>
 
   <ng-container *ngIf="!(isAuthenticated | async)">
     <mat-list-item [routerLink]="['/authentication/login']">
       <mat-icon matListIcon>fingerprint</mat-icon>
-      <a matLine>Login</a>
+      <a matLine>ورود</a>
     </mat-list-item>
   </ng-container>
 
+
+  <a mat-list-item [routerLink]="['/expense/received']">
+    <mat-icon matListIcon>call_received</mat-icon>
+    <span>دریافت کردم</span>
+  </a>
   <ng-container *ngIf="isAuthenticated | async">
+
+    
 
     <a mat-list-item [matMenuTriggerFor]="menuTesting">
       <mat-icon matListIcon>pending_actions</mat-icon>

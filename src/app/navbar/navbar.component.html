@@ -21,7 +21,7 @@
     <mat-menu #authMenu="matMenu">
         <button mat-menu-item *ngIf="!(isAuthenticated | async)" [routerLink]='["/authentication/login"]'>
             <mat-icon>fingerprint</mat-icon>
-            <span >Login</span>
+            <span >ورود</span>
         </button>
         
         <!-- <button mat-menu-item *ngIf="!(isAuthenticated | async)" [routerLink]='["/authentication/register"]'>
