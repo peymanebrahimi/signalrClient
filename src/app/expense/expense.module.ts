@@ -15,10 +15,10 @@ import { SharedModule } from '../shared/shared.module';
     ReceivedlistComponent
   ],
   imports: [
-    CommonModule,
+    // CommonModule,
     SharedModule,
     // MaterialcoreModule,
-    ReactiveFormsModule,
+    // ReactiveFormsModule,
     ExpenseRoutingModule
   ]
 })

@@ -36,13 +36,13 @@
 
     <ng-container matColumnDef="client">
         <mat-header-cell *matHeaderCellDef mat-sort-header>کلاینت</mat-header-cell>
-        <mat-cell *matCellDef="let cell">{{cell.client}}</mat-cell>
+        <mat-cell *matCellDef="let cell">{{cell.client.name}}</mat-cell>
     </ng-container>
 
 
     <ng-container matColumnDef="parvandeh">
         <mat-header-cell *matHeaderCellDef mat-sort-header>در پرونده</mat-header-cell>
-        <mat-cell *matCellDef="let cell">{{cell.parvandeh}}</mat-cell>
+        <mat-cell *matCellDef="let cell">{{cell.parvandeh.title}}</mat-cell>
     </ng-container>
 
 
