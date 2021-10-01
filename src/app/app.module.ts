@@ -11,6 +11,7 @@ import { GreetingComponent } from './greeting/greeting.component';
 import { MaterialcoreModule } from './materialcore/materialcore.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NavsideComponent } from './navside/navside.component';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
@@ -23,7 +24,7 @@ import { NavsideComponent } from './navside/navside.component';
   ],
   imports: [
     BrowserModule,
-    
+    SharedModule,
     BrowserAnimationsModule,
     ApiAuthorizationModule,
     MaterialcoreModule,

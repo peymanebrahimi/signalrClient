@@ -1,0 +1,81 @@
+<p *ngIf="!list"><em>Loading...</em></p>
+
+<div class="commands text-right" *ngIf="list">
+    <button mat-button type="button" [routerLink]="['./add']" class="btn btn-success">
+        افزودن
+        <mat-icon>add_circle_outline</mat-icon>
+    </button>
+</div>
+
+
+<mat-form-field [hidden]="!list">
+    <input matInput (keyup)="loadData($event)" placeholder="فیلتر ...">
+</mat-form-field>
+
+<mat-table [dataSource]="list" class="mat-elevation-z8" [hidden]="!list" matSort (matSortChange)="loadData()"
+    [matSortActive]="defaultSortColumn" [matSortDirection]="defaultSortOrder">
+
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>شناسه</mat-header-cell>
+        <mat-cell *matCellDef="let cell">
+            <a [routerLink]="['edit', cell.id]">{{cell.id}}</a>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="amountReceived">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>مبلغ</mat-header-cell>
+        <mat-cell *matCellDef="let cell">{{cell.amountReceived}}</mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="babat">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>بابت</mat-header-cell>
+        <mat-cell *matCellDef="let cell">{{cell.babat}}</mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="client">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>کلاینت</mat-header-cell>
+        <mat-cell *matCellDef="let cell">{{cell.client}}</mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="parvandeh">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>در پرونده</mat-header-cell>
+        <mat-cell *matCellDef="let cell">{{cell.parvandeh}}</mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="dateReceived">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>تاریخ دریافت</mat-header-cell>
+        <mat-cell *matCellDef="let cell">{{cell.dateReceived | jalaliDate}}</mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="bank">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>بانک</mat-header-cell>
+        <mat-cell *matCellDef="let cell">{{cell.bank}}</mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="cheque">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>چک</mat-header-cell>
+        <mat-cell *matCellDef="let cell">{{cell.cheque}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+<mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50]" (page)="getData($event)" showFirstLastButtons>
+</mat-paginator>
+<ng-template #nodata>
+    <br/>
+    <br/>
+    <br/>
+    <p>داده ای موجود نیست</p>
+</ng-template>
+
+<!-- the hidden attribute is an HTML5-valid content attribute that can
+be legitimately set on any HTML element. The role it's supposed to play is very
+similar to the CSS display: none setting: it indicates to the browser that the
+element and all of its descendants should be not visible or perceivable to any user. -->

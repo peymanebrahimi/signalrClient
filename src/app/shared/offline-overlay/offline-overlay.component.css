@@ -1,0 +1,10 @@
+:host {
+    display: block;
+    background-color: #f9edbe;
+    /* border: 1px solid #704f11; */
+    border-radius: 0 0 2px 2px;
+    box-shadow:  1px solid #f0c36d;
+    font-size: 90%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0 10px; 
+  } 

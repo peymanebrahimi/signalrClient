@@ -7,7 +7,7 @@ import { SpinnerService } from './spinner.service';
   styleUrls: ['./spinner.component.css']
 })
 export class SpinnerComponent implements OnInit, OnDestroy {
-  @Input() name: string;
+  @Input() name!: string;
   private isShowing = false;
 
   @Input()

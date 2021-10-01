@@ -34,4 +34,9 @@ export class TestService {
     // return this.http.get("http://localhost:5000/api/test/GetAuth", httpOptions);
     return this.http.get(`${environment.serverUrl}/api/test/GetAuth`);
   }
+
+  get(){
+    return this.http.get(`${environment.serverUrl}/weatherforecast`);
+  }
 }
+
