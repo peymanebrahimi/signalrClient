@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, filter, finalize, startWith, switchMap, tap } from 'rxjs/operators';
 import { AuthorizeService } from 'src/app/authorization/authorize.service';
-import { Cheque, Client, ClientMini, Parvandeh, Received } from '../models';
+import { Cheque, Client, ClientMini, MiniClient, MiniParvandeh, Parvandeh, Received, ReceivedListVm } from '../models';
 import { ClientService } from '../services/client.service';
 import { ReceivedService } from '../services/received.service';
 
@@ -17,15 +17,15 @@ import { ReceivedService } from '../services/received.service';
 export class ReceivedComponent implements OnInit {
   form: FormGroup;
   id: string = '';
-  received?: Received;
+  received?: ReceivedListVm;
   title?: string;
   clientResult$!: Observable<Client[]>;
   clientIsBusy = false;
-  miniclient: Client = {
+  miniclient: MiniClient = {
     id: '', name: '', nationalCode: ''
   };
-  miniParvandeh: Parvandeh = {
-    baygani: '', id: '', shomareh: '', title: ''
+  miniParvandeh: MiniParvandeh = {
+    id: '', title: ''
   };
   miniCheque: Cheque = {
     bank: '', chequeDate: '', id: '', shomareh: ''
@@ -40,7 +40,7 @@ export class ReceivedComponent implements OnInit {
     this.form = fb.group({
       amountReceived: ['', [Validators.required, Validators.min(0)]],
       dateReceived: ['', [Validators.required]],
-      clientMini: ['', [Validators.required]],
+      client: ['', [Validators.required]],
       babat: ['', [Validators.required]],
       parvandeh: ['', [Validators.required]],
       bank: ['', []],
@@ -74,15 +74,15 @@ export class ReceivedComponent implements OnInit {
   }
 
   onSubmit() {
-    var item = (this.id) ? this.received : <Received>{};
-    this.miniclient.name = this.form.get("clientMini")!.value;
+    var item = (this.id) ? this.received : <ReceivedListVm>{};
+    this.miniclient.name = this.form.get("client")!.value;
     item!.client = this.miniclient;
 
-    this.miniParvandeh.shomareh = this.form.get("parvandeh")!.value;
+    this.miniParvandeh.title = this.form.get("parvandeh")!.value;
     item!.parvandeh = this.miniParvandeh;
 
     this.miniCheque.shomareh = this.form.get("cheque")!.value;
-    item!.cheque = this.miniCheque;
+    // item!.cheque = this.miniCheque;
 
     item!.amountReceived = this.form.get("amountReceived")!.value;
     item!.dateReceived = this.form.get("dateReceived")!.value;

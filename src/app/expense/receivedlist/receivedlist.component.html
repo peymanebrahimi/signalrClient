@@ -1,9 +1,8 @@
 <p *ngIf="!list"><em>Loading...</em></p>
 
 <div class="commands text-right" *ngIf="list">
-    <button mat-button type="button" [routerLink]="['./add']" class="btn btn-success">
-        افزودن
-        <mat-icon>add_circle_outline</mat-icon>
+    <button mat-fab color="accent" type="button" [routerLink]="['./add']" class="btn btn-success">
+        <mat-icon>add</mat-icon>
     </button>
 </div>
 
@@ -18,7 +17,7 @@
     <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef mat-sort-header>شناسه</mat-header-cell>
         <mat-cell *matCellDef="let cell">
-            <a [routerLink]="['edit', cell.id]">{{cell.id}}</a>
+            <a [routerLink]="['edit', cell.id]">{{cell.id | ellipsis: 7}}</a>
         </mat-cell>
     </ng-container>
 

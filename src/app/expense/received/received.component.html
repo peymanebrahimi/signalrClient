@@ -27,8 +27,8 @@
                     </button>
                     <mat-form-field class="col-md-5 col-sm-8">
                         <mat-label>کلاینت</mat-label>
-                        <input matInput formControlName="clientMini" [matAutocomplete]="autoClient">
-                        <mat-error *ngIf="f.clientMini.invalid">required</mat-error>
+                        <input matInput formControlName="clientM" [matAutocomplete]="autoClient">
+                        <mat-error *ngIf="f.client.invalid">required</mat-error>
                     </mat-form-field>
 
                     <mat-autocomplete #autoClient="matAutocomplete" [displayWith]="displayFn"

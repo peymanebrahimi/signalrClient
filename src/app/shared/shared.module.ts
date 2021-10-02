@@ -10,13 +10,17 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { GeneralFormService } from './general-form.service';
 import { OfflineOverlayComponent } from './offline-overlay/offline-overlay.component';
 import { MaterialcoreModule } from '../materialcore/materialcore.module';
+import { AddCommasPipe } from './addCommas.pipe';
+import { EllipsisPipe } from './ellipsis.pipe';
 
 @NgModule({
   imports: [
     CommonModule,
     MaterialcoreModule
   ],
-  declarations: [SpinnerComponent, JalaliDatePipe, JalaliTimePipe, YesNoDialogComponent, OfflineOverlayComponent],
+  declarations: [SpinnerComponent, JalaliDatePipe, JalaliTimePipe, 
+    YesNoDialogComponent, OfflineOverlayComponent,
+    EllipsisPipe, AddCommasPipe],
   exports: [
     CommonModule,
     MaterialcoreModule,
@@ -26,6 +30,7 @@ import { MaterialcoreModule } from '../materialcore/materialcore.module';
     SpinnerComponent,
     JalaliDatePipe,
     JalaliTimePipe,
+    EllipsisPipe, AddCommasPipe
   ],
   entryComponents: [
     YesNoDialogComponent,

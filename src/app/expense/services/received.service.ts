@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Received } from '../models';
+import { Received, ReceivedListVm } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +11,8 @@ export class ReceivedService {
 
   constructor(private http: HttpClient) { }
 
-  save(data: Received) {
-    return this.http.post<Received>(this.url, data)
+  save(data: ReceivedListVm) {
+    return this.http.post<ReceivedListVm>(this.url, data)
   }
 
   getPaged(pageIndex: number, pageSize: number, sortColumn: string, sortOrder: string,
@@ -34,10 +34,10 @@ export class ReceivedService {
   }
 
   getById(id: string) {
-    return this.http.get<Received>(`${this.url}/${id}`)
+    return this.http.get<ReceivedListVm>(`${this.url}/${id}`)
   }
 
-  update(id:string, received:Received){
+  update(id:string, received:ReceivedListVm){
     return this.http.put<Received>(`${this.url}/${id}`, received);
   }
 

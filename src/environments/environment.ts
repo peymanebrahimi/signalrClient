@@ -7,7 +7,7 @@ export const environment = {
   // chatHub: "http://185.7.212.235:83/chathub",
   chatHub: "http://localhost:8080/chathub",
   serverUrl: 'http://localhost:8080',
-  loginUrl: window.location.origin + "/"
+  loginUrl: window.location.origin + "/" 
 };
 
 /*

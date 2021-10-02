@@ -42,3 +42,25 @@ export interface ClientMini {
     name: string;
     nationalCode: string;
 }
+
+export interface ReceivedListVm {
+        id: string;
+        userId: string;
+        amountReceived: number;
+        babat: string;
+        client: MiniClient;
+        parvandeh: MiniParvandeh;
+        dateReceived: Date | string;
+        bank: string;
+    }
+
+    export interface MiniClient {
+        id: string;
+        name: string;
+        nationalCode: string;
+    }
+
+    export interface MiniParvandeh {
+        id: string;
+        title: string;
+    }
