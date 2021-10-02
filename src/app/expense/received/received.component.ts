@@ -124,8 +124,8 @@ export class ReceivedComponent implements OnInit {
   //#region client
   private registerClientSearch() {
 
-    const sellerCtrl = this.form.get('clientMini')!;
-    this.clientResult$ = sellerCtrl.valueChanges
+    const clientCtrl = this.form.get('clientMini')!;
+    this.clientResult$ = clientCtrl.valueChanges
       .pipe(
         startWith(''),
         debounceTime(500),
