@@ -27,18 +27,18 @@
                     </button>
                     <mat-form-field class="col-md-5 col-sm-8">
                         <mat-label>کلاینت</mat-label>
-                        <input matInput formControlName="clientM" [matAutocomplete]="autoClient">
-                        <mat-error *ngIf="f.client.invalid">required</mat-error>
+                        <input matInput formControlName="clientName" [matAutocomplete]="autoClient">
+                        <mat-error *ngIf="f.clientName.invalid">required</mat-error>
                     </mat-form-field>
 
-                    <mat-autocomplete #autoClient="matAutocomplete" [displayWith]="displayFn"
+                    <mat-autocomplete #autoClient="matAutocomplete" [displayWith]="displayAutoClientFn"
                         (optionSelected)="onClientSelected($event)">
                         <mat-option *ngFor="let option of clientResult$ | async" [value]="option">
-                            {{ option.name }} - {{option.nationalCode}}
+                            {{ option.name }}
                         </mat-option>
                     </mat-autocomplete>
                     <button mat-icon-button type="button" *ngIf="form.enabled" (click)="viewClient()">
-                        <mat-icon color="primary">add_box</mat-icon>
+                        <mat-icon color="primary">visibility</mat-icon>
                     </button>
                     <mat-icon *ngIf="clientIsBusy && form.enabled" class="fa-spin">cached</mat-icon>
 

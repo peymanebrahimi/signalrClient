@@ -19,7 +19,7 @@ export class ReceivedComponent implements OnInit {
   id: string = '';
   received?: ReceivedListVm;
   title?: string;
-  clientResult$!: Observable<Client[]>;
+  clientResult$!: Observable<MiniClient[]>;
   clientIsBusy = false;
   miniclient: MiniClient = {
     id: '', name: '', nationalCode: ''
@@ -40,7 +40,7 @@ export class ReceivedComponent implements OnInit {
     this.form = fb.group({
       amountReceived: ['', [Validators.required, Validators.min(0)]],
       dateReceived: ['', [Validators.required]],
-      client: ['', [Validators.required]],
+      'clientName': ['', [Validators.required]],
       babat: ['', [Validators.required]],
       parvandeh: ['', [Validators.required]],
       bank: ['', []],
@@ -60,6 +60,7 @@ export class ReceivedComponent implements OnInit {
     if (this.id) {
       // EDIT MODE
       this.receivedService.getById(this.id).subscribe(result => {
+        
         this.received = result;
         this.title = "ویرایش - " + this.received.client.name;
         // update the form with the country value
@@ -75,21 +76,27 @@ export class ReceivedComponent implements OnInit {
 
   onSubmit() {
     var item = (this.id) ? this.received : <ReceivedListVm>{};
-    this.miniclient.name = this.form.get("client")!.value;
+    if (this.miniclient.id == '') {
+      this.miniclient.name = this.form.get('clientName')!.value;
+    }
+
     item!.client = this.miniclient;
 
-    this.miniParvandeh.title = this.form.get("parvandeh")!.value;
+    if (this.miniParvandeh.id == '') {
+      this.miniParvandeh.title = this.f.parvandeh.value;
+    }
+
     item!.parvandeh = this.miniParvandeh;
 
-    this.miniCheque.shomareh = this.form.get("cheque")!.value;
+    this.miniCheque.shomareh = this.f.cheque.value;
     // item!.cheque = this.miniCheque;
 
-    item!.amountReceived = this.form.get("amountReceived")!.value;
-    item!.dateReceived = this.form.get("dateReceived")!.value;
+    item!.amountReceived = this.f.amountReceived.value;
+    item!.dateReceived = this.f.dateReceived.value;
 
-    item!.babat = this.form.get("babat")!.value;
+    item!.babat = this.f.babat.value;
 
-    item!.bank = this.form.get("bank")!.value;
+    item!.bank = this.f.bank.value;
 
     if (this.id) {
       // EDIT mode
@@ -124,7 +131,7 @@ export class ReceivedComponent implements OnInit {
   //#region client
   private registerClientSearch() {
 
-    const clientCtrl = this.form.get('clientMini')!;
+    const clientCtrl = this.form.get('clientName')!;
     this.clientResult$ = clientCtrl.valueChanges
       .pipe(
         startWith(''),
@@ -151,14 +158,18 @@ export class ReceivedComponent implements OnInit {
         })
       );
   }
+
   onClientSelected(event: MatAutocompleteSelectedEvent) {
-    const miniClient = event.option.value;
-    console.log("onClientSelected: ", event, miniClient);
+    this.miniclient = event.option.value as MiniClient;
+    console.log("onClientSelected: ", event, this.miniclient);
   }
+
   viewClient() { }
-  displayFn(item?: ClientMini): string {
-    return item ? item.name : '';
+
+  displayAutoClientFn(item?: ClientMini): string {
+    return item ? `${item.name} - ${item.nationalCode}` : '';
   }
+
   clearClient() { }
   //#endregion
 }
