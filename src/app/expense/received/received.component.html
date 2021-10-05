@@ -2,7 +2,7 @@
     <fieldset>
         <mat-card>
             <mat-card-title>دریافت کردم</mat-card-title>
-            <mat-card-subtitle></mat-card-subtitle>
+            <mat-card-subtitle>{{title}}</mat-card-subtitle>
             <mat-card-content>
 
                 <div class="row">&nbsp;</div>
@@ -22,31 +22,30 @@
 
 
 
-                    <button mat-icon-button type="button" *ngIf="form.enabled" (click)="clearClient()">
-                        <mat-icon color="warn">delete_forever</mat-icon>
-                    </button>
-                    <mat-form-field class="col-md-5 col-sm-8">
-                        <mat-label>کلاینت</mat-label>
-                        <input matInput formControlName="clientName" [matAutocomplete]="autoClient">
-                        <mat-error *ngIf="f.clientName.invalid">required</mat-error>
-                    </mat-form-field>
-
-                    <mat-autocomplete #autoClient="matAutocomplete" [displayWith]="displayAutoClientFn"
-                        (optionSelected)="onClientSelected($event)">
-                        <mat-option *ngFor="let option of clientResult$ | async" [value]="option">
-                            {{ option.name }}
-                        </mat-option>
-                    </mat-autocomplete>
-                    <button mat-icon-button type="button" *ngIf="form.enabled" (click)="viewClient()">
-                        <mat-icon color="primary">visibility</mat-icon>
-                    </button>
-                    <mat-icon *ngIf="clientIsBusy && form.enabled" class="fa-spin">cached</mat-icon>
 
 
 
+                    <!-- <div formGroupName="client"> -->
+                        <button mat-icon-button type="button" *ngIf="form.enabled" (click)="clearClient()">
+                            <mat-icon color="warn">delete_forever</mat-icon>
+                        </button>
+                        <mat-form-field class="col-md-5 col-sm-8">
+                            <mat-label>کلاینت</mat-label>
+                            <input matInput formControlName="client" [matAutocomplete]="autoClient">
+                            <!-- <mat-error *ngIf="f.name.invalid">required</mat-error> -->
+                        </mat-form-field>
 
-
-
+                        <mat-autocomplete #autoClient="matAutocomplete" [displayWith]="displayAutoClientFn"
+                            (optionSelected)="onClientSelected($event)">
+                            <mat-option *ngFor="let option of clientResult$ | async" [value]="option">
+                                {{ option.name }} - {{ option.nationalCode }}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <button mat-icon-button type="button" *ngIf="form.enabled" (click)="viewClient()">
+                            <mat-icon color="primary">visibility</mat-icon>
+                        </button>
+                        <mat-icon *ngIf="clientIsBusy && form.enabled" class="fa-spin">cached</mat-icon>
+                    <!-- </div> -->
 
 
 
@@ -75,7 +74,7 @@
                 <div class="row">
                     <mat-form-field class="col-md-6 col-sm-8">
                         <mat-label>بانک</mat-label>
-                        <input matInput formControlName="bank" />
+                        <input matInput type="text" formControlName="bank" />
                         <mat-error *ngIf="f.bank.invalid">required</mat-error>
                     </mat-form-field>
 

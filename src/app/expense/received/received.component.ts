@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, filter, finalize, startWith, switchMap, tap } from 'rxjs/operators';
+import { Observable, of, Subject } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, filter, finalize, startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { AuthorizeService } from 'src/app/authorization/authorize.service';
-import { Cheque, Client, ClientMini, MiniClient, MiniParvandeh, Parvandeh, Received, ReceivedListVm } from '../models';
+import { Cheque, Client, Parvandeh, Received } from '../models';
 import { ClientService } from '../services/client.service';
 import { ReceivedService } from '../services/received.service';
 
@@ -15,17 +15,30 @@ import { ReceivedService } from '../services/received.service';
   styleUrls: ['./received.component.scss']
 })
 export class ReceivedComponent implements OnInit {
-  form: FormGroup;
+  private onDestroy$ = new Subject<void>();
+  form!: FormGroup;
   id: string = '';
-  received?: ReceivedListVm;
+  // received?: Received;
   title?: string;
-  clientResult$!: Observable<MiniClient[]>;
+  clientResult$!: Observable<Client[]>;
   clientIsBusy = false;
-  miniclient: MiniClient = {
-    id: '', name: '', nationalCode: ''
-  };
-  miniParvandeh: MiniParvandeh = {
-    id: '', title: ''
+  model?: Received;
+  private initialObj = {
+    amountReceived: '',
+    dateReceived: '',
+    babat: '',
+    bank: '',
+    parvandeh: '',
+    cheque: '',
+    client: {
+      name: ''
+    }
+  }
+  // miniclient: Client = {
+  //   id: '', name: '', nationalCode: ''
+  // };
+  miniParvandeh: Parvandeh = {
+    id: '', title: '', baygani: '', shomareh: ''
   };
   miniCheque: Cheque = {
     bank: '', chequeDate: '', id: '', shomareh: ''
@@ -36,20 +49,21 @@ export class ReceivedComponent implements OnInit {
     private clientService: ClientService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    fb: FormBuilder) {
-    this.form = fb.group({
+    private fb: FormBuilder) { }
+
+  ngOnInit(): void {
+    this.form = this.fb.group({
       amountReceived: ['', [Validators.required, Validators.min(0)]],
       dateReceived: ['', [Validators.required]],
-      'clientName': ['', [Validators.required]],
       babat: ['', [Validators.required]],
       parvandeh: ['', [Validators.required]],
       bank: ['', []],
       cheque: ['', []],
+      client: ['', [Validators.required]],
+      // client: this.fb.group({
+      //   name: ['', [Validators.required]]
+      // }),
     });
-  }
-
-  ngOnInit(): void {
-
     this.loadData();
     this.registerClientSearch();
   }
@@ -60,33 +74,43 @@ export class ReceivedComponent implements OnInit {
     if (this.id) {
       // EDIT MODE
       this.receivedService.getById(this.id).subscribe(result => {
-        
-        this.received = result;
-        this.title = "ویرایش - " + this.received.client.name;
-        // update the form with the country value
-        this.form!.patchValue(this.received);
+
+        this.model = result;
+        this.title = "ویرایش - " + this.model.client.name;
+        // this.form.reset(this.model);
+        this.form.patchValue(this.model);
       }, error => console.error(error));
     }
     else {
       // ADD NEW MODE
+      this.form.reset(this.initialObj);
       this.title = "افزودن دریافتی";
     }
 
   }
-
-  onSubmit() {
-    var item = (this.id) ? this.received : <ReceivedListVm>{};
-    if (this.miniclient.id == '') {
-      this.miniclient.name = this.form.get('clientName')!.value;
+  ngOnDestroy(): void {
+    console.log('ng on destroy');
+    this.onDestroy$.next();
+  }
+  canDeactivate(): boolean | Observable<boolean> | Promise<boolean> {
+    if (this.form.dirty) {
+      return window.confirm('Discard changes?');
     }
+    return true;
+  }
+  onSubmit() {
+    var item = (this.id) ? this.model : <Received>{};
+    // if (this.miniclient.id == '') {
+    //   this.miniclient.name = this.form.get('client.name')!.value;
+    // }
 
-    item!.client = this.miniclient;
+    // item!.client = this.miniclient;
 
     if (this.miniParvandeh.id == '') {
       this.miniParvandeh.title = this.f.parvandeh.value;
     }
 
-    item!.parvandeh = this.miniParvandeh;
+    // item!.parvandeh = this.miniParvandeh;
 
     this.miniCheque.shomareh = this.f.cheque.value;
     // item!.cheque = this.miniCheque;
@@ -100,7 +124,9 @@ export class ReceivedComponent implements OnInit {
 
     if (this.id) {
       // EDIT mode
-      this.receivedService.update(this.received?.id!, item!)
+      this.receivedService.update(this.model?.id!, item!).pipe(
+        takeUntil(this.onDestroy$)
+      )
         .subscribe(result => {
           console.log("recieved " + item!.id + " has been updated.");
           // go back to list
@@ -109,7 +135,9 @@ export class ReceivedComponent implements OnInit {
     }
     else {
       // ADD NEW mode
-      this.receivedService.save(item!)
+      this.receivedService.save(item!).pipe(
+        takeUntil(this.onDestroy$)
+      )
         .subscribe(result => {
           console.log("recieved " + result + " has been created.");
           // go back to list
@@ -118,26 +146,29 @@ export class ReceivedComponent implements OnInit {
     }
   }
 
-
-
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
   }
 
   onCancel() {
-    this.router.navigate(['../'], { relativeTo: this.activatedRoute });
+    // this.router.navigate(['../'], { relativeTo: this.activatedRoute });
+    if (this.id) {
+      this.router.navigate(['../../list'], { relativeTo: this.activatedRoute });
+    } else {
+      this.router.navigate(['../list'], { relativeTo: this.activatedRoute });
+    }
   }
 
   //#region client
   private registerClientSearch() {
 
-    const clientCtrl = this.form.get('clientName')!;
+    const clientCtrl = this.form.get('client')!;
     this.clientResult$ = clientCtrl.valueChanges
       .pipe(
         startWith(''),
         debounceTime(500),
         distinctUntilChanged(),
-        filter(s => s.length >= 3),
+        filter(s => s.length >= 1),
 
         switchMap(s => {
           this.clientIsBusy = true;
@@ -160,14 +191,14 @@ export class ReceivedComponent implements OnInit {
   }
 
   onClientSelected(event: MatAutocompleteSelectedEvent) {
-    this.miniclient = event.option.value as MiniClient;
-    console.log("onClientSelected: ", event, this.miniclient);
+    // this.miniclient = event.option.value as Client;
+    console.log("onClientSelected: ", event, event.option.value);
   }
 
   viewClient() { }
 
-  displayAutoClientFn(item?: ClientMini): string {
-    return item ? `${item.name} - ${item.nationalCode}` : '';
+  displayAutoClientFn(option: Client): string {
+    return option.name ? `${option.name}` : '';
   }
 
   clearClient() { }

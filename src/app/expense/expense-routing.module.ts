@@ -7,9 +7,11 @@ const routes: Routes = [
   {
     path: 'received',
     children: [
-      { path: '', component: ReceivedlistComponent },
+      { path: '', redirectTo: 'list', pathMatch: 'full' },
+      { path: 'list', component: ReceivedlistComponent },
       { path: 'add', component: ReceivedComponent },
-      { path: 'edit/:id', component: ReceivedComponent }
+      { path: 'edit/:id', component: ReceivedComponent },
+      { path: '**', redirectTo: 'received' }
     ]
   }
 

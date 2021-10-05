@@ -16,7 +16,7 @@ export class ReceivedlistComponent implements OnInit, AfterViewInit {
   defaultPageSize: number = 10;
   defaultSortColumn: string = "id";
   defaultSortOrder: SortDirection = "asc";
-  defaultFilterColumn: string = "babat";
+  defaultFilterColumn: string = "client.name";
   filterQuery: string | null = null;
 
   list = new MatTableDataSource<Received>();
