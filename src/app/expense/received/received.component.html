@@ -25,27 +25,25 @@
 
 
 
-                    <!-- <div formGroupName="client"> -->
-                        <button mat-icon-button type="button" *ngIf="form.enabled" (click)="clearClient()">
+                    <!-- <button mat-icon-button type="button" *ngIf="form.enabled" (click)="clearClient()">
                             <mat-icon color="warn">delete_forever</mat-icon>
-                        </button>
-                        <mat-form-field class="col-md-5 col-sm-8">
-                            <mat-label>کلاینت</mat-label>
-                            <input matInput formControlName="client" [matAutocomplete]="autoClient">
-                            <!-- <mat-error *ngIf="f.name.invalid">required</mat-error> -->
-                        </mat-form-field>
+                        </button> -->
+                    <mat-form-field class="col-md-6 col-sm-8">
+                        <mat-label>کلاینت</mat-label>
+                        <input matInput formControlName="client" [matAutocomplete]="autoClient">
+                        <!-- <mat-error *ngIf="f.name.invalid">required</mat-error> -->
+                    </mat-form-field>
 
-                        <mat-autocomplete #autoClient="matAutocomplete" [displayWith]="displayAutoClientFn"
-                            (optionSelected)="onClientSelected($event)">
-                            <mat-option *ngFor="let option of clientResult$ | async" [value]="option">
-                                {{ option.name }} - {{ option.nationalCode }}
-                            </mat-option>
-                        </mat-autocomplete>
-                        <button mat-icon-button type="button" *ngIf="form.enabled" (click)="viewClient()">
+                    <mat-autocomplete #autoClient="matAutocomplete" [displayWith]="displayAutoClientFn"
+                        (optionSelected)="onClientSelected($event)">
+                        <mat-option *ngFor="let option of clientResult$ | async" [value]="option">
+                            {{ option.name }} - {{ option.nationalCode }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <!-- <button mat-icon-button type="button" *ngIf="form.enabled" (click)="viewClient()">
                             <mat-icon color="primary">visibility</mat-icon>
                         </button>
-                        <mat-icon *ngIf="clientIsBusy && form.enabled" class="fa-spin">cached</mat-icon>
-                    <!-- </div> -->
+                        <mat-icon *ngIf="clientIsBusy && form.enabled" class="fa-spin">cached</mat-icon> -->
 
 
 
@@ -64,12 +62,19 @@
                         <mat-error *ngIf="f.babat.invalid">required</mat-error>
                     </mat-form-field>
 
+
+
                     <mat-form-field class="col-md-6 col-sm-8">
                         <mat-label>در پرونده</mat-label>
-                        <input matInput formControlName="parvandeh" />
+                        <input matInput formControlName="parvandeh" [matAutocomplete]="autoParvande"/>
                         <mat-error *ngIf="f.parvandeh.invalid">required</mat-error>
                     </mat-form-field>
-
+                    <mat-autocomplete #autoParvande="matAutocomplete" [displayWith]="displayAutoParvandehFn"
+                        (optionSelected)="onParvandehSelected($event)">
+                        <mat-option *ngFor="let option of parvandehResult$ | async" [value]="option">
+                            {{ option.title }} - {{ option.shomareh }}
+                        </mat-option>
+                    </mat-autocomplete>
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-6 col-sm-8">

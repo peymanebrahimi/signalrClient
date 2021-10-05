@@ -7,6 +7,7 @@ import { MaterialcoreModule } from '../materialcore/materialcore.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReceivedlistComponent } from './receivedlist/receivedlist.component';
 import { SharedModule } from '../shared/shared.module';
+import { MaterialJalaliMomentAdapterModule } from 'material-jalali-moment-adapter';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { SharedModule } from '../shared/shared.module';
     SharedModule,
     // MaterialcoreModule,
     // ReactiveFormsModule,
+    MaterialJalaliMomentAdapterModule,
     ExpenseRoutingModule
   ]
 })

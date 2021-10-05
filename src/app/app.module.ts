@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialJalaliMomentAdapterModule } from 'material-jalali-moment-adapter';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ApiAuthorizationModule } from './authorization/api-authorization.module';
@@ -30,6 +31,7 @@ import { SharedModule } from './shared/shared.module';
     MaterialcoreModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MaterialJalaliMomentAdapterModule,
     AppRoutingModule, 
     // ServiceWorkerModule.register('ngsw-worker.js', {
     //   enabled: environment.production,

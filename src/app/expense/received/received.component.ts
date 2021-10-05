@@ -7,6 +7,7 @@ import { catchError, debounceTime, distinctUntilChanged, filter, finalize, start
 import { AuthorizeService } from 'src/app/authorization/authorize.service';
 import { Cheque, Client, Parvandeh, Received } from '../models';
 import { ClientService } from '../services/client.service';
+import { ParvandehService } from '../services/parvandeh.service';
 import { ReceivedService } from '../services/received.service';
 
 @Component({
@@ -21,6 +22,7 @@ export class ReceivedComponent implements OnInit {
   // received?: Received;
   title?: string;
   clientResult$!: Observable<Client[]>;
+  parvandehResult$!: Observable<Parvandeh[]>;
   clientIsBusy = false;
   model?: Received;
   private initialObj = {
@@ -47,6 +49,7 @@ export class ReceivedComponent implements OnInit {
   constructor(public authService: AuthorizeService,
     private receivedService: ReceivedService,
     private clientService: ClientService,
+    private parvandehService: ParvandehService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder) { }
@@ -60,12 +63,10 @@ export class ReceivedComponent implements OnInit {
       bank: ['', []],
       cheque: ['', []],
       client: ['', [Validators.required]],
-      // client: this.fb.group({
-      //   name: ['', [Validators.required]]
-      // }),
     });
     this.loadData();
     this.registerClientSearch();
+    this.registerParvandehSearch();
   }
 
   loadData() {
@@ -202,5 +203,44 @@ export class ReceivedComponent implements OnInit {
   }
 
   clearClient() { }
+  //#endregion
+
+  //#region Parvandeh
+  private registerParvandehSearch() {
+
+    const ctrl = this.form.get('parvandeh')!;
+    this.parvandehResult$ = ctrl.valueChanges
+      .pipe(
+        startWith(''),
+        debounceTime(500),
+        distinctUntilChanged(),
+        filter(s => s.length >= 1),
+
+        switchMap(s => {
+          return this.parvandehService.queryClient(s)
+            .pipe(catchError(e => {
+              console.log('switchmap catcherror: ', e);
+              return of([]);
+            }));
+        }),
+        catchError(e => {
+          console.log('catcherror: ', e);
+          return of([]);
+        }),
+        tap(() => {
+          console.log('tap');
+        })
+      );
+  }
+
+  onParvandehSelected(event: MatAutocompleteSelectedEvent) {
+    // this.miniclient = event.option.value as Client;
+    console.log("onParvandehSelected: ", event, event.option.value);
+  }
+
+  displayAutoParvandehFn(option: Parvandeh): string{
+    return option.title ? `${option.title}` : '';
+  }
+  
   //#endregion
 }

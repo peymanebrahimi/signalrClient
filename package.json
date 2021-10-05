@@ -28,6 +28,8 @@
     "jalali-moment": "^3.3.10",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
+    "material-design-icons": "^3.0.1",
+    "material-jalali-moment-adapter": "^3.0.1",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
