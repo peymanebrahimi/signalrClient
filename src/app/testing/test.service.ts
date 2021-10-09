@@ -35,7 +35,7 @@ export class TestService {
     return this.http.get(`${environment.serverUrl}/api/test/GetAuth`);
   }
 
-  get(){
+  getWeather(){
     return this.http.get(`${environment.serverUrl}/weatherforecast`);
   }
 }

@@ -66,7 +66,7 @@
 
                     <mat-form-field class="col-md-6 col-sm-8">
                         <mat-label>در پرونده</mat-label>
-                        <input matInput formControlName="parvandeh" [matAutocomplete]="autoParvande"/>
+                        <input matInput formControlName="parvandeh" [matAutocomplete]="autoParvande" />
                         <mat-error *ngIf="f.parvandeh.invalid">required</mat-error>
                     </mat-form-field>
                     <mat-autocomplete #autoParvande="matAutocomplete" [displayWith]="displayAutoParvandehFn"
@@ -77,20 +77,48 @@
                     </mat-autocomplete>
                 </div>
                 <div class="row">
-                    <mat-form-field class="col-md-6 col-sm-8">
+
+                    <mat-label>نحوه دریافت</mat-label>
+                    <mat-radio-group (change)="paymentMethodChange($event)" name="paymentMethod" #paymentMethod>
+
+                        <mat-radio-button value="bank">بانک</mat-radio-button>
+                        <mat-radio-button value="cheque">چک</mat-radio-button>
+                    </mat-radio-group>
+</div>
+
+
+
+                    <mat-form-field class="col-md-6 col-sm-8" *ngIf="showBank">
                         <mat-label>بانک</mat-label>
                         <input matInput type="text" formControlName="bank" />
                         <mat-error *ngIf="f.bank.invalid">required</mat-error>
                     </mat-form-field>
 
-                    <mat-form-field class="col-md-6 col-sm-8">
-                        <mat-label>چک</mat-label>
-                        <input matInput formControlName="cheque" />
-                        <mat-error *ngIf="f.cheque.invalid">required</mat-error>
-                    </mat-form-field>
+                    <div formGroupName="cheque" *ngIf="!showBank" class="row">
+                        <mat-form-field class="col-md-6 col-sm-8" >
+                            <mat-label>بانک چک</mat-label>
+                            <input matInput formControlName="chequeBank" />
+                        </mat-form-field>
+                        <mat-form-field class="col-md-6 col-sm-8" >
+                            <mat-label>تاریخ چک</mat-label>
+                            <input matInput [matDatepicker]="chequeDatePicker" formControlName="chequeDate" />
+                            <mat-datepicker-toggle matSuffix [for]="chequeDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #chequeDatePicker></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field class="col-md-6 col-sm-8" >
+                            <mat-label>شماره جک</mat-label>
+                            <input matInput formControlName="shomareh" />
+                        </mat-form-field>
+                        <mat-form-field class="col-md-6 col-sm-8" >
+                            <mat-label>صادرکننده</mat-label>
+                            <input matInput formControlName="saderKonandeh" />
+                        </mat-form-field>
+
+                    </div>
 
 
-                </div>
+
+             
                 <div class="row">&nbsp;</div>
 
 

@@ -16,7 +16,7 @@ export interface Received extends IHaveId {
 }
 export interface Client extends IHaveId {
     id: string;
-
+    userId: string;
     name: string;
     nationalCode: string;
 
@@ -27,20 +27,16 @@ export interface Parvandeh extends IHaveId {
     title: string;
     shomareh: string;
     baygani: string;
+    userId: string;
 }
 
 export interface Cheque extends IHaveId {
     id: string;
-
+    userId: string;
     shomareh: string;
     chequeDate: Date | string;
-    bank: string;
-}
-
-export interface ClientMini {
-    id: string;
-    name: string;
-    nationalCode: string;
+    chequeBank: string;
+    saderKonandeh: string;
 }
 
 export interface ReceivedListVm {
@@ -64,3 +60,4 @@ export interface ReceivedListVm {
         id: string;
         title: string;
     }
+

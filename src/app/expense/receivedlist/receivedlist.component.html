@@ -59,7 +59,7 @@
 
     <ng-container matColumnDef="cheque">
         <mat-header-cell *matHeaderCellDef mat-sort-header>چک</mat-header-cell>
-        <mat-cell *matCellDef="let cell">{{cell.cheque}}</mat-cell>
+        <mat-cell *matCellDef="let cell">{{cell.cheque?.shomareh}} - {{cell.cheque?.chequeBank}}</mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
